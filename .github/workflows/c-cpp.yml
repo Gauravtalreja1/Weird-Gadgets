@@ -1,6 +1,6 @@
 name: C/C++ CI
 
-on: [push]
+on: [pull_request, push]
 
 jobs:
   build:
@@ -10,7 +10,9 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: configure
-      run: ./configure
+      run: ./MYPROJECT.cpp 
+    - name: configure
+      run: ./myprojectgadgets.cpp 
     - name: make
       run: make
     - name: make check
