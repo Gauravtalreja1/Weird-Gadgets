@@ -8,9 +8,18 @@ jobs:
     runs-on: self-hosted
     
     steps:
-#   - uses: actions/checkout@v1
-    - name: configure
-      run: curl https://gitlab.cee.redhat.com/identity-management/ipa-pytests/raw/RHEL8.1/metadata/pytests/external-ca.yaml
+      - uses: actions/checkout@v1
+      - name: configure
+        run: echo "Hello" + ${{ github.event.number }} 
+      # Find the PR associated with this push, if there is one.
+      - uses: jwalton/gh-find-current-pr@v1
+        id: findPr
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+      - run: echo "Your PR is ${PR}"
+        if: success() && steps.findPr.outputs.number
+        env:
+          PR: ${{ steps.findPr.outputs.pr }}  
 #   - name: make
 #      run: make
 #    - name: make check
